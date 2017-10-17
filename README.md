@@ -4,7 +4,7 @@ This repo shows a quick, easy and cheap way to get the LoRa32u4 II board up and 
 The board used in the example is http://www.diymalls.com/index.php?route=product/product&path=74&product_id=88
 But there several more to choose from, such as the Moteino Mega https://lowpowerlab.com/shop/product/119 or RocketScream Mini Ultra Pro http://www.rocketscream.com/blog/product/mini-ultra-pro-with-radio/ which both offers more program memory if needed. All three have been tested and works great.
 
-There is a free Wire(I2C) interface and Hardware serial for example GPS. 6 free analog inputs 5+ free IO/PWM etc. The Hardware SPI interface used by RFM95 can be shared if needed.
+There is a free Wire(I2C) interface and Hardware serial for example GPS. 6 free analog inputs 5+ free IO/PWM etc. The Hardware SPI interface used by RFM95 can be shared.
 
 NB! The code in this repo is geared toward use in EU, but the LMIC library supports US channels as well.
 
@@ -40,17 +40,27 @@ BAT-----1MOhm-----3MOhm-----GND
 ### Install Arduino libraries
 Into libraries folder ex. ~/code/arduino/libraries
 * My fork of arduino-lmic (git clone https://github.com/Redferne/arduino-lmic.git)
-* elapsedMillis (git clone http://github.com/pfeerick/elapsedMillis/wiki)
+* elapsedMillis (git clone https://github.com/pfeerick/elapsedMillis.git)
 
 Clone this repo to your prefered source folder ex. ~/code/arduino
 * (git clone https://github.com/Redferne/LoRaWAN_32u4_II.git)
 
-Add path to your Platform.O (~/.platformio/penv/bin) to your $PATH
+Add path to your Platform.IO (~/.platformio/penv/bin) to your $PATH
 
 ## Compile and Program board
 * In PlatformIO -> Open Project -> LoraWAN_32u4_II
 * Change your monitor_port/upload_port and lib_dir in platformio.ini
 * Select Build / Upload / Serial Monitor from the PlatformIO GUI or use a terminal
+* Make sure have access to the serial ports (need to logout/login to take effect)
+```
+$ sudo usermod -G dialout -a <username>
+```
+* Make sure ModemManager is not interfering with the serial ports. Unless ModemManager is used for connectivity, remove it!
+```
+sudo apt-get purge modemmanager
+```
+Open a terminal and change into the project directory (.../LoRaWAN_32u4_II/)
+Compile, upload and monitor the serial debug output:
 ```
 $ pio run
 $ pio run -t upload
